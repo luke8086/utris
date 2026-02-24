@@ -1,29 +1,32 @@
-### µTris
+# µTris
 
 A rudimentary tetris clone that fits into a 512b bootsector of x86 devices and works without an operating system
 
-### Running
+## Building
+
+Make sure to have NASM installed. Then just run `make`
+
+
+## Testing
+
+To test in QEMU:
 
 ```
-nasm utris.asm -o utris.o
-
-# Either prepare a floppy disk image for an emulator:
-
-dd if=/dev/zero of=floppy.img bs=1k count=1440
-dd if=utris.o of=floppy.img conv=notrunc
-
-# Or install on a physical floppy, HDD or a USB disk
-# for booting a real device (USE WITH CAUTION):
-
-dd if=utris.o of=/dev/disk2
+qemu-system-i386 -drive format=raw,file=disk.img
 ```
 
-### Controls ###
+To try on real hardware:
+
+```
+dd if=disk.img of=<PENDRIVE OR FLOPPY>
+```
+
+## Controls ###
 
     move   - left/right/down
     rotate - up
     drop   - space bar
 
-### Screenshot ###
+## Screenshot ###
 
 ![screenshot.png](screenshot.png)
