@@ -67,16 +67,10 @@ main:
     mov dh, SCREEN_H
     int 0x10
 
-    ; draw blue border
-    mov ax, 0x1700
+    ; draw gray background
+    mov ax, 0x7000
     mov cx, SCREEN_W * SCREEN_H
     xor di, di
-    rep stosw
-
-    ; draw gray background
-    mov ah, 0x70
-    mov cx, SCREEN_W * (SCREEN_H - 2)
-    mov di, SCREEN_W * 2
     rep stosw
 
     ; draw board
