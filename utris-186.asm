@@ -1,20 +1,12 @@
 ;
-; Rudimentary self-hosting tetris clone that fits into a 512b bootsector
+; Bootsector-sized tetris clone for 186+ CPUs
 ;
-; Installation:
-;   $ nasm tetris.asm -o tetris.o
-;   $ dd if=tetris.o of=/dev/fd0 conv=notrunc
-;
-; Controls:
-;   move   - left/right/down
-;   rotate - up
-;   drop   - space bar
-;
-; Copyright (c) 2012  luke8086.
+; Copyright (c) 2012-2026 luke8086.
 ; Distributed under the terms of GPL-2 License.
 ;
 
 [bits 16]
+[cpu 186]
 [org 0x7c00]
 
 ; 80x25 screen

@@ -12,13 +12,13 @@ Make sure to have NASM installed. Then just run `make`
 To test in QEMU:
 
 ```
-qemu-system-i386 -drive format=raw,file=disk.img
+qemu-system-i386 -drive format=raw,file=disk-486.img
 ```
 
 To try on real hardware:
 
 ```
-dd if=disk.img of=<PENDRIVE OR FLOPPY>
+dd if=disk-586.img of=<PENDRIVE OR FLOPPY>
 ```
 
 ## Controls ###
