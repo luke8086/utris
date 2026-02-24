@@ -17,7 +17,7 @@ SCREEN_H    equ 0x19
 BOARD_X     equ 0x18
 BOARD_Y     equ 0x02
 BOARD_W     equ 0x0a
-BOARD_H     equ 0x13
+BOARD_H     equ 0x15
 
 ; next-piece box
 PANEL_X     equ BOARD_X + BOARD_W * 2 + 0x06
@@ -209,15 +209,6 @@ main:
     xor bx, bx
     mov cx, PANEL_Y << 8 | PANEL_X
     mov dx, (PANEL_Y + PANEL_H - 1) << 8 | (PANEL_X + PANEL_W * 2 + 1)
-
-    ; preserve ax
-    pusha
-    int 0x10
-    popa
-
-    ; clear shadow box
-    mov cx, ((BOARD_Y + BOARD_H + 1) << 8) | (BOARD_X)
-    mov dx, ((BOARD_Y + BOARD_H + 1) << 8) | (BOARD_X + BOARD_W * 2 - 1)
     int 0x10
     popa
 
@@ -324,17 +315,6 @@ run_piece:
     xor ax, ax
     mov ah, bl
     call run_block
-
-    ; draw shadow
-    cmp dl, BOARD_X + BOARD_W * 2
-    jge .skip_shadow
-    push dx
-    mov dh, BOARD_Y + BOARD_H + 1
-    push word [si+DATA_COL]
-    call run_block
-    pop word [si+DATA_COL]
-    pop dx
-.skip_shadow:
 
     jmp short .draw_done
 
