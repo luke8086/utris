@@ -41,7 +41,7 @@ DATA_PIECE  equ 0x05
 DATA_POS    equ 0x07
 
 ; game
-GAME_SPEED  equ 0x0e
+GAME_SPEED  equ 0x08
 
 ; ---------------------------------------------------------------------
 ; Starting point

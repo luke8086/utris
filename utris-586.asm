@@ -39,7 +39,7 @@ DATA_TIME   equ 0x01
 DATA_NEXT   equ 0x03
 
 ; game
-GAME_SPEED  equ 0x0e
+GAME_SPEED  equ 0x08
 
 ; ---------------------------------------------------------------------
 ; Starting point
