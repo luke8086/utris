@@ -37,6 +37,8 @@ PIECE_COUNT equ 0x07
 DATA_COL    equ 0x00
 DATA_TIME   equ 0x01
 DATA_NEXT   equ 0x03
+DATA_PIECE  equ 0x05
+DATA_POS    equ 0x07
 
 ; game
 GAME_SPEED  equ 0x0e
@@ -220,11 +222,11 @@ main:
 
     ; store rotation:piece at once (ah == 0 == rotation)
     shr ax, 0x08
-    mov gs, ax
+    mov [si+DATA_PIECE], ax
 
     ; default position
     mov dx, PIECE_Y << 8 | PIECE_X
-    mov fs, dx
+    mov [si+DATA_POS], dx
 
     ; draw new piece (assume cl == 0)
     mov byte [si+DATA_COL], cl
@@ -351,9 +353,9 @@ run_piece:
 move_piece:
     ; erase current
     push ax
-    mov ax, gs
+    mov ax, [si+DATA_PIECE]
     mov cl, ah
-    mov dx, fs
+    mov dx, [si+DATA_POS]
     xor bl, bl
     call run_piece
     pop ax
@@ -366,7 +368,7 @@ move_piece:
 
 .down_loop:
     ; check for collision
-    mov ax, gs
+    mov ax, [si+DATA_PIECE]
     mov bl, 0xff
     mov byte [si+DATA_COL], 0x00
     call run_piece
@@ -375,8 +377,8 @@ move_piece:
 
     ; save new position
     mov ah, cl
-    mov gs, ax
-    mov fs, dx
+    mov [si+DATA_PIECE], ax
+    mov [si+DATA_POS], dx
 
     ; step down one by one until we're done or we find a collision
     dec ch
@@ -393,9 +395,9 @@ move_piece:
 
 .collision:
     ; restore previous position
-    mov ax, gs
+    mov ax, [si+DATA_PIECE]
     mov cl, ah
-    mov dx, fs
+    mov dx, [si+DATA_POS]
     mov bl, 0x01
     call run_piece
 
