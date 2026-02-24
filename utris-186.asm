@@ -96,9 +96,15 @@ main:
     int 0x16
     mov cl, ah
 
+    ; clear registers for movement
+    xor ax, ax
+    xor ch, ch
+
     ; right
     cmp cl, 0x4d
-    sete al
+    jne .skip_right
+    inc al
+.skip_right:
 
     ; left
     cmp cl, 0x4b
@@ -108,11 +114,15 @@ main:
 
     ; up (rotate)
     cmp cl, 0x48
-    sete ch
+    jne .skip_up
+    inc ch
+.skip_up:
 
     ; down
     cmp cl, 0x50
-    sete ah
+    jne .skip_down
+    inc ah
+.skip_down:
 
     ; space bar
     cmp cl, 0x39
