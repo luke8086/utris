@@ -193,9 +193,9 @@ main:
 ; Generate new piece
 
 .next_piece:
-    ; use rtc to find random number
-    rdtsc
+    ; use PIT to find random number
     xor ah, ah
+    in al, 0x40
     mov bl, PIECE_COUNT
     div bl
 
