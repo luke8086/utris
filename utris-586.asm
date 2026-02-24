@@ -332,12 +332,6 @@ run_piece:
     pop dx
 .skip_shadow:
 
-    jmp short .draw_done
-
-.collision:
-    mov byte [si+DATA_COL], 0x01
-
-.draw_done:
     popa
 
 .skip_draw:
