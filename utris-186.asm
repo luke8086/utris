@@ -51,11 +51,6 @@ main:
     ; conventional ram, right after our code
     mov si, 0x0200
 
-    ; disable blinking, enable bright bg colors
-    mov ax, 0x1003
-    xor bx, bx
-    int 0x10
-
     ; hide cursor
     mov ah, 0x02
     mov dh, SCREEN_H
