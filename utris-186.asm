@@ -15,9 +15,9 @@ SCREEN_H    equ 0x19
 
 ; 10x20 board
 BOARD_X     equ 0x1e
-BOARD_Y     equ 0x02
+BOARD_Y     equ 0x01
 BOARD_W     equ 0x0a
-BOARD_H     equ 0x15
+BOARD_H     equ 0x16
 
 ; piece's default position
 PIECE_X     equ 0x03 + BOARD_X / 2
@@ -56,14 +56,22 @@ main:
     mov dh, SCREEN_H
     int 0x10
 
-    ; draw gray background
-    mov ax, 0x7000
+    ; clear screen
+    xor ax, ax
     mov cx, SCREEN_W * SCREEN_H
     xor di, di
     rep stosw
 
-    ; draw board
+    ; draw board walls
     mov ax, 0x0600
+    mov bh, 0x70
+    mov cx, (BOARD_Y << 8) | (BOARD_X) - 2
+    mov dx, ((BOARD_Y + BOARD_H) << 8) | (BOARD_X + BOARD_W * 2 + 1)
+    int 0x10
+
+    ; clear board
+    mov ax, 0x0600
+    xor bh, bh
     mov cx, (BOARD_Y << 8) | (BOARD_X)
     mov dx, ((BOARD_Y + BOARD_H - 1) << 8) | (BOARD_X + BOARD_W * 2 - 1)
     int 0x10
