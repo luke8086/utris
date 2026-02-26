@@ -14,7 +14,7 @@ SCREEN_W    equ 0x50
 SCREEN_H    equ 0x19
 
 ; 10x20 board
-BOARD_X     equ 0x1e
+BOARD_X     equ (SCREEN_W - (BOARD_W * 2)) / 2
 BOARD_Y     equ 0x01
 BOARD_W     equ 0x0a
 BOARD_H     equ 0x16
