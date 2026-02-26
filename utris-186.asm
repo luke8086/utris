@@ -14,16 +14,10 @@ SCREEN_W    equ 0x50
 SCREEN_H    equ 0x19
 
 ; 10x20 board
-BOARD_X     equ 0x18
+BOARD_X     equ 0x1e
 BOARD_Y     equ 0x02
 BOARD_W     equ 0x0a
 BOARD_H     equ 0x15
-
-; next-piece box
-PANEL_X     equ BOARD_X + BOARD_W * 2 + 0x06
-PANEL_Y     equ BOARD_Y
-PANEL_W     equ 0x06
-PANEL_H     equ 0x08
 
 ; piece's default position
 PIECE_X     equ 0x03 + BOARD_X / 2
@@ -36,9 +30,8 @@ PIECE_COUNT equ 0x07
 ; data offsets relative to si
 DATA_COL    equ 0x00
 DATA_TIME   equ 0x01
-DATA_NEXT   equ 0x03
-DATA_PIECE  equ 0x05
-DATA_POS    equ 0x07
+DATA_PIECE  equ 0x03
+DATA_POS    equ 0x05
 
 ; game
 GAME_SPEED  equ 0x08
@@ -57,7 +50,6 @@ main:
 
     ; conventional ram, right after our code
     mov si, 0x0200
-    mov byte [si+DATA_NEXT], 0x00
 
     ; disable blinking, enable bright bg colors
     mov ax, 0x1003
@@ -146,8 +138,8 @@ main:
     ; wait
     mov ax, dx
     xor bh, bh
-    sub ax, GAME_SPEED
     sub ax, [si+DATA_TIME]
+    cmp ax, GAME_SPEED
     jb .game_loop
     mov [si+DATA_TIME], dx
 
@@ -200,25 +192,7 @@ main:
     in al, 0x40
     mov bl, PIECE_COUNT
     div bl
-
-    ; save as next-piece and restore previous one
     mov al, ah
-    xchg ah, [si+DATA_NEXT]
-
-    ; clear next-piece box
-    pusha
-    mov ax, 0x0600
-    xor bx, bx
-    mov cx, PANEL_Y << 8 | PANEL_X
-    mov dx, (PANEL_Y + PANEL_H - 1) << 8 | (PANEL_X + PANEL_W * 2 + 1)
-    int 0x10
-    popa
-
-    ; draw in next-piece box
-    xor cl, cl
-    mov dx, (PANEL_Y - BOARD_Y + 4) << 8 | PANEL_X - BOARD_X + 1
-    mov bl, 0x01
-    call run_piece
 
     ; store rotation:piece at once (ah == 0 == rotation)
     shr ax, 0x08
@@ -228,7 +202,8 @@ main:
     mov dx, PIECE_Y << 8 | PIECE_X
     mov [si+DATA_POS], dx
 
-    ; draw new piece (assume cl == 0)
+    ; draw new piec
+    xor cl, cl
     mov byte [si+DATA_COL], cl
     call run_piece
 
