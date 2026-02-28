@@ -1,11 +1,13 @@
 # µTris
 
-A rudimentary tetris clone that fits into a 512b bootsector of x86 devices and works without an operating system
+A simple Tetris game that fits into a 512-byte bootsector of a PC.
+
+It comes in two versions, a modern version for 586+ (Pentium and later) CPUs,
+and a more basic one targetting vintage machines as old as 80186.
 
 ## Building
 
 Make sure to have NASM installed. Then just run `make`
-
 
 ## Testing
 
