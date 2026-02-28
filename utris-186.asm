@@ -205,7 +205,7 @@ main:
     mov dx, PIECE_Y << 8 | PIECE_X
     mov [si+DATA_POS], dx
 
-    ; draw new piec
+    ; draw new piece
     xor cl, cl
     mov byte [si+DATA_COL], cl
     call run_piece
