@@ -12,7 +12,7 @@ Make sure to have NASM installed. Then just run `make`
 To test in QEMU:
 
 ```
-qemu-system-i386 -drive format=raw,file=disk-486.img
+qemu-system-i386 -drive format=raw,file=disk-586.img
 ```
 
 To try on real hardware:
