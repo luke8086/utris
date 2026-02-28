@@ -27,6 +27,8 @@ dd if=disk-586.img of=<PENDRIVE OR FLOPPY>
     rotate - up
     drop   - space bar
 
-## Screenshot ###
+## Screenshots ###
 
-![screenshot.png](screenshot.png)
+<img src="screenshot1.png" width="400">
+
+<img src="screenshot2.jpg" width="400">
