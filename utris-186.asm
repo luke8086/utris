@@ -32,6 +32,7 @@ DATA_COL    equ 0x00
 DATA_TIME   equ 0x01
 DATA_PIECE  equ 0x03
 DATA_POS    equ 0x05
+DATA_SEED   equ 0x07
 
 ; game
 GAME_SPEED  equ 0x08
@@ -75,6 +76,10 @@ main:
     mov cx, (BOARD_Y << 8) | (BOARD_X)
     mov dx, ((BOARD_Y + BOARD_H - 1) << 8) | (BOARD_X + BOARD_W * 2 - 1)
     int 0x10
+
+    ; seed RNG from PIT
+    in al, 0x40
+    mov [si+DATA_SEED], al
 
     jmp .next_piece
 
@@ -190,9 +195,15 @@ main:
 ; Generate new piece
 
 .next_piece:
-    ; use PIT to find random number
+    ; draw random piece using LCG (linear congruential generator)
+    ; seed = (seed * 141 + 1) mod 256
+    mov al, [si+DATA_SEED]
+    mov ah, 141
+    mul ah
+    inc al
+    mov [si+DATA_SEED], al
+    mov al, ah
     xor ah, ah
-    in al, 0x40
     mov bl, PIECE_COUNT
     div bl
     mov al, ah
