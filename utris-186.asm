@@ -376,7 +376,7 @@ move_piece:
     ret
 
 ; ---------------------------------------------------------------------
-; original rotation and colors
+; original rotations
 ; source: http://tetris.wikia.com/wiki/Tetris_(IBM_PC)
 
 pieces:
