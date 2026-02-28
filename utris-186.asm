@@ -208,6 +208,7 @@ main:
     ; draw new piece
     xor cl, cl
     mov byte [si+DATA_COL], cl
+    mov bl, 0x01
     call run_piece
 
     ; if there is no place, restart whole game
