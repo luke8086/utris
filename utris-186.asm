@@ -23,8 +23,8 @@ BOARD_H     equ 0x16
 PIECE_X     equ 0x03 + BOARD_X / 2
 PIECE_Y     equ 0x00 + BOARD_Y
 
-; piece structure: 4 rotations + 1 color
-PIECE_SIZE  equ 0x09
+; piece structure: 4 rotations
+PIECE_SIZE  equ 0x08
 PIECE_COUNT equ 0x07
 
 ; data offsets relative to si
@@ -271,8 +271,7 @@ run_piece:
     ; load color for drawing mode
     cmp bl, 0x01
     jne .skip_color
-    mov bl, byte [di+0x08]
-
+    mov bl, 0xf0
 
 .skip_color:
 
@@ -382,19 +381,12 @@ move_piece:
 
 pieces:
     dw 0x4444, 0x0f00, 0x4444, 0x0f00 ; I
-    db 0x40 ; red
     dw 0x44c0, 0x8e00, 0x6440, 0x0e20 ; J
-    db 0xf0 ; white
     dw 0x4460, 0x0e80, 0xc440, 0x2e00 ; L
-    db 0x50 ; magenta
     dw 0x0cc0, 0x0cc0, 0x0cc0, 0x0cc0 ; O
-    db 0x10 ; blue
     dw 0x06c0, 0x4620, 0x06c0, 0x4620 ; S
-    db 0x20 ; green
     dw 0x4e00, 0x4640, 0x0e40, 0x4c40 ; T
-    db 0x60 ; brown
     dw 0x0c60, 0x2640, 0x0c60, 0x2640 ; Z
-    db 0x30 ; cyan
 
 ; ---------------------------------------------------------------------
 times 510-($-$$) db 0
